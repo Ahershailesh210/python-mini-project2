@@ -1,0 +1,118 @@
+BEGIN StudentManagementSystem
+
+    // Initialize student records
+    SET students = empty list
+
+    // Input student details
+    INPUT numberOfStudents
+
+    FOR i = 1 TO numberOfStudents
+        INPUT rollNumber
+        INPUT name
+        INPUT department
+
+        SET marks = empty dictionary
+
+        INPUT marks for Maths
+        INPUT marks for Physics
+        INPUT marks for Chemistry
+        INPUT marks for Python
+        INPUT marks for IDS
+
+        CREATE student record using rollNumber, name, department, and marks
+        ADD student record TO students
+    END FOR
+
+    // Display all students
+    FOR EACH student IN students
+        DISPLAY student details
+    END FOR
+
+    // Search student
+    INPUT searchRollNumber
+    SET found = FALSE
+
+    FOR EACH student IN students
+        IF student.rollNumber equals searchRollNumber THEN
+            DISPLAY student details
+            SET found = TRUE
+            BREAK
+        END IF
+    END FOR
+
+    IF found equals FALSE THEN
+        DISPLAY "Student not found"
+    END IF
+
+    // Update student details
+    INPUT updateRollNumber
+    SET found = FALSE
+
+    FOR EACH student IN students
+        IF student.rollNumber equals updateRollNumber THEN
+            INPUT newName
+            UPDATE student name
+            INPUT new marks for all subjects
+            UPDATE student marks
+            SET found = TRUE
+            DISPLAY "Student updated successfully"
+            BREAK
+        END IF
+    END FOR
+
+    IF found equals FALSE THEN
+        DISPLAY "Student not found"
+    END IF
+
+    // Delete student
+    INPUT deleteRollNumber
+    SET found = FALSE
+
+    FOR EACH student IN students
+        IF student.rollNumber equals deleteRollNumber THEN
+            REMOVE student FROM students
+            SET found = TRUE
+            DISPLAY "Student deleted successfully"
+            BREAK
+        END IF
+    END FOR
+
+    IF found equals FALSE THEN
+        DISPLAY "Student not found"
+    END IF
+
+    // Calculate average marks
+    FOR EACH student IN students
+        SET totalMarks = SUM of student marks
+        SET averageMarks = totalMarks / number of subjects
+        STORE averageMarks for student
+    END FOR
+
+    // Find highest scorer
+    IF students is not empty THEN
+        FIND student with highest averageMarks
+        DISPLAY highest-scoring student details
+    ELSE
+        DISPLAY "No students available"
+    END IF
+
+    // Find students by department
+    INPUT departmentName
+    SET departmentFound = FALSE
+
+    FOR EACH student IN students
+        IF student.department equals departmentName
+            DISPLAY student details
+            SET departmentFound = TRUE
+        END IF
+    END FOR
+
+    IF departmentFound equals FALSE THEN
+        DISPLAY "No students found in this department"
+    END IF
+
+    // Count students
+    SET totalStudents = length of students
+    DISPLAY totalStudents
+
+END StudentManagementSystem
